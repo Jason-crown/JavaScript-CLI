@@ -22,9 +22,23 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
 }
 
 async function runCLI() {
-  console.log("Starting Bulk Template Boilerplate Generator...\n");
+  const args = process.argv.slice(2);
+  const outputDir = path.join(process.cwd(), 'dist'); // Move this to the very top
 
-  // Step 1: Gather user inputs
+  // 1. Check for the clean command first
+  if (args[0] === 'clean') {
+    if (fs.existsSync(outputDir)) {
+      fs.rmSync(outputDir, { recursive: true, force: true });
+      console.log(" Cleaned! The 'dist' directory has been completely removed.");
+    } else {
+      console.log(" No 'dist' folder found to clean.");
+    }
+    process.exit(0); 
+  }
+
+  console.log(" Starting Bulk Template Boilerplate Generator...\n");
+
+  // 2. Gather user inputs
   const answers = await inquirer.prompt([
     {
       type: 'input',
@@ -46,12 +60,11 @@ async function runCLI() {
     }
   ]);
 
-  // Step 2: Define paths
+  // 3. Define paths (DELETE the duplicate 'const outputDir' line that was right here!)
   const templateDir = path.join(process.cwd(), 'templates');
-  const outputDir = path.join(process.cwd(), 'dist');
 
   if (!fs.existsSync(templateDir)) {
-    console.error(`Error: 'templates' folder not found at ${templateDir}`);
+    console.error(` Error: 'templates' folder not found at ${templateDir}`);
     process.exit(1);
   }
 
