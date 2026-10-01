@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ projectName }}</title>
+    <style>
+        body { background: {{ themeColor }}; color: white; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to {{ projectName }}</h1>
+    <p>Created by: {{ authorName }}</p>
+
+    {{#if includeAnalytics}}
+    <!-- Analytics Script Component Included -->
+    <script src="https://example.com"></script>
+    {{/if}}
+</body>
+</html>
